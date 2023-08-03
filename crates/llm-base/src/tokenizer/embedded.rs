@@ -23,7 +23,7 @@ pub struct EmbeddedTokenizer {
 
     // todo: use a radix tree
     /// Maps a token to a token ID.
-    token_to_id: HashMap<Token, TokenId>,
+    pub token_to_id: HashMap<Token, TokenId>,
 
     /// The longest token in this tokenizer.
     max_token_length: usize,
