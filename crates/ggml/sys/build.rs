@@ -13,6 +13,7 @@ fn main() {
 
     let build = builder
         .files(["llama-cpp/ggml.c", "llama-cpp/k_quants.c"])
+        .define("GGML_METAL_NDEBUG", None)
         .define("GGML_USE_K_QUANTS", None)
         .includes(["llama-cpp"]);
 
