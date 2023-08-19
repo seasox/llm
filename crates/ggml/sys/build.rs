@@ -21,6 +21,7 @@ fn main() {
     // Feel free to update this to fit your operating system.
     let target_arch = env::var("CARGO_CFG_TARGET_ARCH").unwrap();
     let target_os = env::var("CARGO_CFG_TARGET_OS").unwrap();
+    let target_vendor = env::var("CARGO_CFG_TARGET_VENDOR").unwrap();
     let is_release = env::var("PROFILE").unwrap() == "release";
     let compiler = build.get_compiler();
 
@@ -76,7 +77,9 @@ fn main() {
         }
         "aarch64" => {
             if compiler.is_like_clang() || compiler.is_like_gnu() {
-                if std::env::var("HOST") == std::env::var("TARGET") {
+                // in a docker environment, target_vendor is "unknown", while it is "apple" on a mac
+                if !target_vendor.eq("unknown") && std::env::var("HOST") == std::env::var("TARGET")
+                {
                     build.flag("-mcpu=native");
                 } else {
                     #[allow(clippy::single_match)]
